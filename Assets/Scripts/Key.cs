@@ -2,5 +2,5 @@
 
 public class Key : MonoBehaviour
 {
-        
+    public int indexInSequence;
 }

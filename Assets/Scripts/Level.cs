@@ -38,6 +38,10 @@ public class Level : MonoBehaviour
             var prefab = mKeyPrefabs[rand];
             var key = Instantiate(prefab, correctTrack.transform);
             key.transform.localPosition = Vector3.right * (keyIndex - 2);
+            
+            // Destroy the collider so we do not collide with the correct keys...
+            Destroy(key.GetComponent<Collider2D>());
+            
             correctTrack.Add(key);
         }
     }

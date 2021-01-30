@@ -2,5 +2,8 @@
 
 public class Key : MonoBehaviour
 {
-    public int indexInSequence;
+    public void Deactivate()
+    {
+        
+    }
 }

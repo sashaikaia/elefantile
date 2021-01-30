@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     {
         if (level.movingState)
         {
-            transform.localPosition += Vector3.right * level.bpm * Time.deltaTime;
+            transform.localPosition += Vector3.right * (level.bpm * Time.deltaTime);
         }
     }
 }

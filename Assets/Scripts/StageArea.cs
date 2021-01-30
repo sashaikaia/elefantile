@@ -20,7 +20,7 @@ public class StageArea : MonoBehaviour
             yield return new WaitForSeconds(mInterval);
             var position = tracksParent.transform.localPosition;
             var targetY = position.y + 1.0f;
-            yield return tracksParent.DOMoveY(targetY, 0.25f).WaitForCompletion();
+            yield return tracksParent.DOLocalMoveY(targetY, 0.25f).WaitForCompletion();
         }
         
         yield return new WaitForSeconds(mInterval);

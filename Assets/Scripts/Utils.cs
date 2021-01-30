@@ -31,4 +31,11 @@ public static class Utils
             list.RemoveAt(list.Count - 1);
         }
     }
+
+    public static void SetLocalY(this Transform tr, float newY)
+    {
+        var pos = tr.localPosition;
+        pos.y = newY;
+        tr.localPosition = pos;
+    }
 }

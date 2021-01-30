@@ -20,6 +20,12 @@ public class Level : MonoBehaviour
     // The key prefab set to select from
     [SerializeField] private KeyPrefabs mKeyPrefabs;
 
+    // Staging area
+    [SerializeField] private StageArea mStageArea;
+
+    // Empty track prefab
+    [SerializeField] private KeyTrack mTrackPrefab;
+
     // The index range of the tracks. By default from -1 to 1.
     // These corresponds to the y-value of the track gameObjects.
     public int mTrackRangeMin;
@@ -29,27 +35,58 @@ public class Level : MonoBehaviour
 
     private void Awake()
     {
-        GenerateCorrectTrack();
+        StartCoroutine(CrtRunGame());
         GenerateCandidateTracks();
     }
 
-    private void GenerateCorrectTrack()
+    private IEnumerator CrtRunGame()
     {
+        const int maxKeysPerRow = 4;
+        (mStageArea.mTracks, mStageArea.mTracksParent) = GenerateCorrectTrack(maxKeysPerRow);
+        yield return StartCoroutine(mStageArea.CrtDisplayAllCorrectPatterns());
+    }
+
+    private (List<KeyTrack>, Transform) GenerateCorrectTrack(int maxKeysPerRow)
+    {
+        var result = new List<KeyTrack>();
+
+        var rowId = 0;
+        var colId = 0;
+        var trackParent = new GameObject("track_parent");
+
+        trackParent.transform.SetParent(mStageArea.transform, false);
+        trackParent.transform.localPosition = Vector3.zero;
+
+        var targetTrack = CreateEmptyTrack(trackParent.transform);
+        targetTrack.transform.SetLocalY(-rowId);
+
         for (var keyIndex = 0; keyIndex < numCorrectKeys; ++keyIndex)
         {
+            if (colId >= maxKeysPerRow)
+            {
+                ++rowId;
+                colId -= maxKeysPerRow;
+                result.Add(targetTrack);
+                targetTrack.AlignKeys(-1.5f, 1.0f);
+                
+                targetTrack = CreateEmptyTrack(trackParent.transform);
+                targetTrack.transform.SetLocalY(-rowId);
+            }
+
             var rand = Random.Range(0, mKeyPrefabs.Count);
             var prefab = mKeyPrefabs[rand];
-            var key = Instantiate(prefab, correctTrack.transform);
+            var key = Instantiate(prefab, targetTrack.transform);
 
-            // Destroy the collider so we do not collide with the correct keys...
-            Destroy(key.GetComponent<Collider2D>());
-
-            // Record the prefab so we can generate it later
-            key.prototype = prefab;
-
-            correctTrack.Add(key);
+            targetTrack.Add(key);
+            ++colId;
         }
-        correctTrack.AlignKeys(-2.0f);
+
+        return (result, trackParent.transform);
+    }
+
+    private KeyTrack CreateEmptyTrack(Transform parent)
+    {
+        return Instantiate(mTrackPrefab, parent);
     }
 
     private void GenerateCandidateTracks()
@@ -70,12 +107,12 @@ public class Level : MonoBehaviour
         foreach (var correctKey in correctTrack)
         {
             var candidateKeys = mKeyPrefabs.Where(key => key != correctKey.prototype).ToList();
-            
+
             candidateKeys.Backfill(numTracks - 1);
             candidateKeys.RemoveExcess(numTracks - 1);
             candidateKeys.Add(correctKey.prototype);
             candidateKeys.Shuffle();
-            
+
             for (int i = 0; i < numTracks; ++i)
             {
                 var track = candidateTracks[i];

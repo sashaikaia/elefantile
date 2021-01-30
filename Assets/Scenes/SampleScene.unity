@@ -340,7 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 1663437653}
-  mTrackTransitionSpeed: 4
+  mTrackTransitionSpeed: 6
 --- !u!212 &1110002791
 SpriteRenderer:
   m_ObjectHideFlags: 0

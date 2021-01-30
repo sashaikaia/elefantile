@@ -19,6 +19,6 @@ public class CameraFollowObject : MonoBehaviour
     {
         var position = transform.position;
         position.x = mTargetTransform.position.x + mOffset;
-        transform.position = position;
+        transform.position = Vector3.Lerp(transform.position, position, 0.9f);
     }
 }

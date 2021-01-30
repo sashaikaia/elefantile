@@ -93,9 +93,6 @@
 			<value>0.63832199546485258</value>
 		</property>
 		<property name="name" />
-		<property name="playlistMode">
-			<value>1</value>
-		</property>
 		<relationship name="sounds">
 			<destination>{0bf8b473-fd8d-4141-895f-7d2dcfa81d3f}</destination>
 			<destination>{842bf6d1-8466-45cd-ac73-ea934f0bcece}</destination>

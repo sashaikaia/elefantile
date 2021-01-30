@@ -9,7 +9,7 @@ namespace DefaultNamespace
         private List<Key> mKeys = new List<Key>();
 
         [SerializeField] private KeyPrefabs mKeyPrefabs;
-        
+
         private void Awake()
         {
             for (int i = 0; i < transform.childCount; ++i)

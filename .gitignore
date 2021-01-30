@@ -516,4 +516,6 @@ InitTestScene*.unity
 # Include Lock File
 !/Packages/packages-lock.json
 
+.DS_Store
+
 # End of https://www.toptal.com/developers/gitignore/api/unity,rider,visualstudio,visualstudiocode

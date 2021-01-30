@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2179108098872788945, guid: 9b5844739553b1f4ea5cab93df4e3070, type: 3}
+      propertyPath: mAudioCue
+      value: 
+      objectReference: {fileID: 8300000, guid: 2fee027d7730bce429e033e04b5fa948, type: 3}
     - target: {fileID: 7578349353213580944, guid: 9b5844739553b1f4ea5cab93df4e3070, type: 3}
       propertyPath: m_Sprite
       value: 

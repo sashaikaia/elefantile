@@ -39,16 +39,16 @@ public class Player : MonoBehaviour
             var currentPosition = transform.position;
             var targetTrack = mCurrentTrack + mTrackTransitionDirection;
             var progress = Mathf.Abs(currentPosition.y - mCurrentTrack);
-            
+
             if (progress >= Mathf.Abs(mTrackTransitionDirection - 0.01f))
             {
                 // The player has already made to the target track
-                
+
                 // Snap to target track and update current tracker
                 currentPosition.y = targetTrack;
                 mCurrentTrack = targetTrack;
                 transform.position = currentPosition;
-                
+
                 // End the transition
                 mTrackTransitionDirection = 0;
             }
@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
             {
                 mTrackTransitionDirection = -1;
             }
-            
+
             // Ignore out-of-range tracks
             var targetTrack = mCurrentTrack + mTrackTransitionDirection;
             if (targetTrack > level.mTrackRangeMax || targetTrack < level.mTrackRangeMin)
@@ -81,6 +81,8 @@ public class Player : MonoBehaviour
     {
         var key = other.gameObject.GetComponent<Key>();
         if (key == null || key.mDeactivated) return;
+
+        key.PlayAudio();
 
         var keyIndex = key.mIndexInSequence;
         foreach (var track in mTracks)

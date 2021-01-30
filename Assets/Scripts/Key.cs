@@ -8,6 +8,10 @@ public class Key : MonoBehaviour
     public bool mDeactivated = false;
     public int mIndexInSequence;
     
+    /// <summary>
+    /// The prefab from which this key is instantiated
+    /// </summary>
+    public Key prototype;
     private void Awake()
     {
         mSpriteRenderer = GetComponent<SpriteRenderer>();

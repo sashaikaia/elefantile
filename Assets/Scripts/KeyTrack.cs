@@ -9,26 +9,12 @@ namespace DefaultNamespace
     {
         private List<Key> mKeys = new List<Key>();
 
-        private void Awake()
-        {
-            for (int i = 0; i < transform.childCount; ++i)
-            {
-                var childTransform = transform.GetChild(i);
-                var key = childTransform.GetComponent<Key>();
-                if (key == null) continue;
-                mKeys.Add(key);
-                key.mIndexInSequence = i;
-            }
-
-            AlignKeys();
-        }
-
-        private void AlignKeys()
+        public void AlignKeys(float offset = 0.0f, float unitPerKey = 1.0f)
         {
             for (int i = 0; i < mKeys.Count; ++i)
             {
                 var key = mKeys[i];
-                key.transform.localPosition = Vector3.right * i;
+                key.transform.localPosition = unitPerKey * (i + offset) * Vector3.right;
             }
         }
 

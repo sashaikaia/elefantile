@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        mTracks = level.keyTracks;
+        mTracks = level.candidateTracks;
     }
 
     private void Update()

@@ -19,11 +19,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (level.movingState)
-        {
-            transform.localPosition += Vector3.right * (level.bpm * Time.deltaTime);
+        transform.localPosition += Vector3.right * (level.bpm * Time.deltaTime);
+        HandleTrackTransition();
 
-            HandleTrackTransition();
+        if (!level.mProgressionStarted && transform.localPosition.x >= 6.0f)
+        {
+            level.StartProgression();
         }
     }
 

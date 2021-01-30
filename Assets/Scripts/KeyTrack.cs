@@ -9,8 +9,6 @@ namespace DefaultNamespace
     {
         private List<Key> mKeys = new List<Key>();
 
-        [SerializeField] private KeyPrefabs mKeyPrefabs;
-
         private void Awake()
         {
             for (int i = 0; i < transform.childCount; ++i)
@@ -48,6 +46,8 @@ namespace DefaultNamespace
 
         public void Add(Key item)
         {
+            Debug.Assert(item != null);
+            item.mIndexInSequence = mKeys.Count;
             mKeys.Add(item);
         }
 

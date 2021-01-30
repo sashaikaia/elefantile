@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// This scripts allows the camera to follow the x-value of
+/// This script allows the camera to follow the x-value of
 /// an object's transform.
 /// It respects the initial offset.
 /// </summary>

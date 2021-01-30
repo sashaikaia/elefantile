@@ -1,12 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyPrefabs : ScriptableObject
+[CreateAssetMenu(menuName = "Configurations/Key Prefabs")]
+public class KeyPrefabs : ScriptableObject, IReadOnlyList<Key>
 {
     [SerializeField] private List<Key> mPrefabs;
 
-    public Key GetKey(int index)
+    public IEnumerator<Key> GetEnumerator()
     {
-        return mPrefabs[index];
+        return mPrefabs.GetEnumerator();
     }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    public int Count => mPrefabs.Count;
+
+    public Key this[int index] => mPrefabs[index];
 }

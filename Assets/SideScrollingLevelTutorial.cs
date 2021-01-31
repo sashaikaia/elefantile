@@ -91,20 +91,34 @@ namespace Elephantile
             {
                 Debug.Assert(column.Count == 3);
                 var columnView = new List<NoteView>();
+                var expected = GetExpectedNote();
+                AdvanceNote();
                 for (var i = 0; i < 3; ++i)
                 {
                     var noteViewPos = new Vector2(colId, i - 1.0f);
                     var noteView = Instantiate(mNoteViewPrefab, parent.transform);
                     noteView.transform.localPosition = noteViewPos;
                     noteView.SetNote(column[i]);
-                    noteView.Fade(0.0f, 0.0f);
-                    noteView.UnFade(1.0f);
+
+                    
+                    print("expected pitch "+expected.pitch+ ", note pitch " + column[i].pitch);
+                    if (expected.pitch != column[i].pitch)
+                    {
+                        noteView.Fade(0.2f, 0.0f);
+                    } else
+                    {
+                        print("right note, no fade for you");
+                    }
+                    
+                    //noteView.UnFade(1.0f);
                     columnView.Add(noteView);
                 }
-
+                
                 mCandidateViews.Add(columnView);
                 ++colId;
             }
+            base.ResetChallenge();
+            print("after reset, expected note index is "+GetIndexOfExpectedNote());
         }
 
         public override LevelDefinition GetDefinition() => mLevelData;
@@ -156,12 +170,12 @@ namespace Elephantile
             {
                 exclude = chosenView;
                 mNotePlayer.PlayNote(expected.pitch);
-                mFeedbackGroup.PlayHappyFace();
+                //mFeedbackGroup.PlayHappyFace();
             }
             else
             {
                 mNotePlayer.PlayFailureSound();
-                mFeedbackGroup.PlaySadFace();
+                //mFeedbackGroup.PlaySadFace();
                 --mLivesLeft;
                 mHealthMeter?.SetHealth(mLivesLeft);
                 if (mLivesLeft <= 0)
@@ -255,7 +269,7 @@ namespace Elephantile
             mLevelState = LevelState.Game;
             base.ResetChallenge();
             SetHealth(mMaxLives);
-            mFeedbackGroup.Reset();
+            //mFeedbackGroup.Reset();
 
             foreach (var noteView in mCandidateViews.SelectMany(x => x))
             {

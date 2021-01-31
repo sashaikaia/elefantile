@@ -16,6 +16,7 @@ namespace Elephantile
 
         [SerializeField] private NotePlayer mNotePlayer;
         [SerializeField] private Karaoke mKaraoke;
+        [SerializeField] private int mMaxLives = 3;
 
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
@@ -34,9 +35,11 @@ namespace Elephantile
         private int mNextColumnIndex = 0;
         private int mArrowInput = 1;
 
+        private int mLivesLeft;
 
         private void Awake()
         {
+            mLivesLeft = mMaxLives;
             mMainCamera.transform.MatchXY(mKaraoke.transform.position);
             mLevelData = mNoteDb.ParseLevel(levelText);
             GenerateCandidates();
@@ -139,7 +142,10 @@ namespace Elephantile
 
             var expected = GetExpectedNote();
 
+            chosenView.PunchScale(1.05f, 0.2f);
+
             NoteView exclude = null;
+
             if (expected.pitch == chosenNote.pitch)
             {
                 exclude = chosenView;
@@ -148,9 +154,20 @@ namespace Elephantile
             else
             {
                 mNotePlayer.PlayFailureSound();
-            }
+                --mLivesLeft;
+                if (mLivesLeft <= 0)
+                {
+                    IEnumerator DoRestartLevel()
+                    {
+                        yield return new WaitForSeconds(1.0f);
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    }
 
-            chosenView.PunchScale(1.05f, 0.2f);
+                    mLevelState = LevelState.Failed;
+                    StartCoroutine(DoRestartLevel());
+                    return;
+                }
+            }
             
             AdvanceNote();
             if (IsEndOfLevel())
@@ -158,6 +175,7 @@ namespace Elephantile
                 IEnumerator DoTransitionToPayoff()
                 {
                     yield return new WaitForSeconds(1.0f);
+                    mLevelState = LevelState.Payoff;
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 }
 
@@ -223,7 +241,8 @@ namespace Elephantile
         {
             Intro,
             Game,
-            Payoff
+            Payoff,
+            Failed
         }
     }
 }

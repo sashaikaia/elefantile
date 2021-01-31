@@ -8,6 +8,7 @@ public class NotePlayer : MonoBehaviour
 {
     [SerializeField] private List<FMODUnity.StudioEventEmitter> mNoteList;
     private Dictionary<char, FMODUnity.StudioEventEmitter> mNoteMapper;
+    private bool mStart = true;
     // private const int mMaxNumNotes = 7;
     public void Awake() {
         mNoteMapper = new Dictionary<char, FMODUnity.StudioEventEmitter>();
@@ -18,7 +19,16 @@ public class NotePlayer : MonoBehaviour
         }
     }
 
-    public void PlayNote(char n) {
-        mNoteMapper[n].GetComponent<FMODUnity.StudioEventEmitter>().Play();
+    // public void PlayNote(char n) {
+    //     mNoteMapper[n].GetComponent<FMODUnity.StudioEventEmitter>().Play();
+    // }
+
+    public void PlayNote(int songIndex) {
+        if (mStart) {
+            mNoteList[songIndex].GetComponent<FMODUnity.StudioEventEmitter>().Play();
+            mStart = false;
+        } else {
+            mNoteList[songIndex].GetComponent<FMODUnity.StudioEventEmitter>().EventInstance.triggerCue();
+        }
     }
 }

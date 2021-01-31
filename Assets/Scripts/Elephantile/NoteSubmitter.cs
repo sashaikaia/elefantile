@@ -16,8 +16,8 @@ namespace Elephantile {
             mLevelDefIndex = 0;
         }
         public void SubmitNote(char n) {
-            if (mLevelDef[mLevelDefIndex].pitch == n) {
-                mNotePlayer.PlayNote(n);
+            if (true) { //mLevelDef[mLevelDefIndex].pitch == n) {
+                mNotePlayer.PlayNote(0); // CHANGE ME LATER
             } else {
                 onError();
             }

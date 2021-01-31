@@ -8,11 +8,13 @@ public class SimpleAnimation : MonoBehaviour
     [SerializeField] private List<GameObject> mFrames = new List<GameObject>();
     [SerializeField] private float mInterval;
     [SerializeField] private bool mShouldPlayAtStart;
+    [SerializeField] private int mFrameAtStart = 0;
 
     private int mCurrentFrame = 0;
     private void Awake()
     {
-        PlayFrame(mCurrentFrame);
+        mCurrentFrame = mFrameAtStart;
+        PlayFrame(mFrameAtStart);
         if (mShouldPlayAtStart) Play();
     }
 

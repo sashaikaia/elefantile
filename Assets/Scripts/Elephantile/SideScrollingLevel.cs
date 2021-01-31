@@ -17,7 +17,8 @@ namespace Elephantile
         [SerializeField] private NotePlayer mNotePlayer;
         [SerializeField] private Karaoke mKaraoke;
         [SerializeField] private int mMaxLives = 3;
-
+        [SerializeField] private HealthMeter mHealthMeter;
+        
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
 
@@ -155,6 +156,7 @@ namespace Elephantile
             {
                 mNotePlayer.PlayFailureSound();
                 --mLivesLeft;
+                mHealthMeter?.SetHealth(mLivesLeft);
                 if (mLivesLeft <= 0)
                 {
                     IEnumerator DoRestartLevel()

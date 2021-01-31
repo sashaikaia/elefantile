@@ -257,10 +257,11 @@ namespace Elephantile
             
             foreach (var noteView in mCandidateViews.SelectMany(x => x))
             {
-                noteView.Fade();
+                noteView.Fade(0.0f);
             }
             
             Destroy(mCandidatesParent.gameObject, 0.2f);
+            mCandidatesParent = null;
             GenerateCandidates();
             CreateCandidateGameObjects();
 

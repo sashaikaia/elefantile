@@ -20,6 +20,8 @@ namespace Elephantile
         [SerializeField] private int mMaxLives = 3;
         [SerializeField] private HealthMeter mHealthMeter;
         [SerializeField] private FeedbackGroup mFeedbackGroup;
+        [SerializeField] private Transform mPayoffScreen;
+
         
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
@@ -137,7 +139,6 @@ namespace Elephantile
             var currentViewColumn = mCandidateViews[GetIndexOfExpectedNote()];
             var chosenNoteView = currentViewColumn[maybeKey.Value];
             var chosenNote = currentColumn[maybeKey.Value];
-            var currentSong = 0; // CHANGE ME LATER TO UPDATE AFTER EACH CHAPTER
 
             SubmitNote(chosenNote, chosenNoteView);
 
@@ -179,14 +180,21 @@ namespace Elephantile
                     return;
                 }
             }
-
+            
+            AdvanceNote();
+            
             if (IsEndOfLevel())
             {
                 IEnumerator DoTransitionToPayoff()
                 {
-                    yield return new WaitForSeconds(1.0f);
+                    yield return new WaitForSeconds(0.5f);
                     mLevelState = LevelState.Payoff;
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+                    var pos = mMainCamera.transform.position;
+                    pos.x = mPayoffScreen.position.x;
+                    pos.y = mPayoffScreen.position.y;
+                    yield return mMainCamera.transform.DOMove(pos, 1.5f).WaitForCompletion();
+                    mPayoffScreen.GetComponent<PayoffScreenBase>().Play();
                 }
 
                 mAcceptingInput = false;
@@ -200,13 +208,11 @@ namespace Elephantile
 
         private void DoColumnTransition(NoteView exclude)
         {
-            foreach (var noteView in mCandidateViews[GetIndexOfExpectedNote()])
+            foreach (var noteView in mCandidateViews[GetIndexOfExpectedNote() - 1])
             {
                 if (exclude == noteView) continue;
                 noteView.Fade();
             }
-
-            AdvanceNote();
             StartCoroutine(CrtDoMoveLeft());
         }
 
@@ -247,6 +253,10 @@ namespace Elephantile
             else if (Input.GetKeyDown(KeyCode.R))
             {
                 ResetChallenge();
+            }
+            else if (Input.GetKeyDown(KeyCode.T))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
 

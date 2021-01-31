@@ -12,6 +12,8 @@ namespace Elephantile
     {
         public string levelText = "";
 
+        [SerializeField] private NoteSubmitter mNoteSubmitter;
+        
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
 
@@ -100,6 +102,11 @@ namespace Elephantile
             if (maybeKey is null) return;
 
             Debug.Log("Submitting note to submitter");
+
+            var currentColumn = mCandidateDefinitions[mNextColumnIndex];
+            var chosenNote = currentColumn[maybeKey.Value];
+            mNoteSubmitter.SubmitNote(chosenNote.pitch);
+            
             foreach (var noteView in mCandidateViews[mNextColumnIndex])
             {
                 noteView.Fade();

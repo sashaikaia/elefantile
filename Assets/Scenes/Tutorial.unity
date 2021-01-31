@@ -616,6 +616,7 @@ MonoBehaviour:
   mKaraoke: {fileID: 287606682}
   mMaxLives: 3
   mHealthMeter: {fileID: 541560162}
+  mFeedbackGroup: {fileID: 0}
   mNoteViewPrefab: {fileID: 8418867891361567873, guid: 5eba470c5c2d4ac45aa16bc7c6e5a6a7, type: 3}
   mMainCamera: {fileID: 868389408}
 --- !u!1 &530266668
@@ -1238,6 +1239,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 147914045932410457, guid: 76b9a9912f59ca249995b83357198e1e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 147914045932410457, guid: 76b9a9912f59ca249995b83357198e1e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 147914045932410457, guid: 76b9a9912f59ca249995b83357198e1e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.34

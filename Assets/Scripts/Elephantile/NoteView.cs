@@ -8,7 +8,7 @@ namespace Elephantile
     public class NoteView : MonoBehaviour
     {
         private SpriteRenderer mSpriteRenderer;
-
+        [SerializeField] private KeyHintView mKeyHintView;
         private void Awake()
         {
             mSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -36,5 +36,20 @@ namespace Elephantile
             mSpriteRenderer.sprite = note.sprite;
             mSpriteRenderer.color = note.color;
         }
+
+        public void ShowKeyHint(char hint)
+        {
+            
+        }
+
+        public void HideKeyHint()
+        {
+            
+        }
+    }
+
+    public class KeyHintView : MonoBehaviour
+    {
+        
     }
 }

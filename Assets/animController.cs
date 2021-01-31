@@ -5,10 +5,10 @@ using UnityEngine;
 public class animController : MonoBehaviour
 {
     public Animator anim;
-    string piano = "piano_anim";
-    string keyW = "keyW_anim";
-    string keyS = "keyS_anim";
-    string keyX = "keyX_anim";
+    [SerializeField] string piano;
+    [SerializeField] string keyW;
+    [SerializeField] string keyS;
+    [SerializeField] string keyX;
     // Start is called before the first frame update
     void Start()
     {

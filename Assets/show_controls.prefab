@@ -116,7 +116,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
-  stateName: keyW_anim
+  piano: piano_anim
+  keyW: keyW_anim
+  keyS: keyS_anim
+  keyX: 'keyX_anim:'
 --- !u!1 &147914045953431362
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +269,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
-  stateName: keyS_anim
+  piano: piano_anim
+  keyW: keyW_anim
+  keyS: keyS_anim
+  keyX: 'keyX_anim:'
 --- !u!1 &147914047593450958
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,4 +389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
-  stateName: keyX_anim
+  piano: piano_anim
+  keyW: keyW_anim
+  keyS: keyS_anim
+  keyX: keyX_anim

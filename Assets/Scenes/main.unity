@@ -1151,6 +1151,7 @@ MonoBehaviour:
   levelText: GFEFA;ABCDEFG
   mNotePlayer: {fileID: 1248752964}
   mKaraoke: {fileID: 1225957003}
+  mMaxLives: 3
   mNoteViewPrefab: {fileID: 8418867891361567873, guid: 5eba470c5c2d4ac45aa16bc7c6e5a6a7, type: 3}
   mMainCamera: {fileID: 1069165977}
 --- !u!4 &1237941303

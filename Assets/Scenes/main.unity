@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 658222884}
   - component: {fileID: 658222883}
   m_Layer: 0
-  m_Name: pianoC
+  m_Name: music_box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,7 +542,7 @@ GameObject:
   - component: {fileID: 1218597036}
   - component: {fileID: 1218597035}
   m_Layer: 0
-  m_Name: note_player
+  m_Name: music_player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -557,12 +557,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1218597034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95cd9b935d8a23a49995d3bd674bedff, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c1df28ec6457b24e928cf3a0e7c3d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mNoteList:
+  mSongList:
   - {fileID: 658222883}
-  - {fileID: 1974067843}
 --- !u!4 &1218597036
 Transform:
   m_ObjectHideFlags: 0
@@ -659,7 +658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mLevelBase: {fileID: 1237941302}
-  mNotePlayer: {fileID: 1218597035}
+  mNotePlayer: {fileID: 0}
 --- !u!4 &1347161701
 Transform:
   m_ObjectHideFlags: 0

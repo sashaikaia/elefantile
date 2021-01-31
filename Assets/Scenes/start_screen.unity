@@ -2083,7 +2083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mNoteDb: {fileID: 11400000, guid: 1434929e3289f694a938043b94dada08, type: 2}
-  levelText: ABAAAAA
+  levelText: EDC;EDCB
   mNotePlayer: {fileID: 1248752964}
   mKaraoke: {fileID: 1225957003}
   mMaxLives: 3

@@ -12,7 +12,7 @@ public class LevelLoader : MonoBehaviour
     void Update()
     {
         //The scene will transition to the next level
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown("space"))
         {
             LoadNextLevel();
         }

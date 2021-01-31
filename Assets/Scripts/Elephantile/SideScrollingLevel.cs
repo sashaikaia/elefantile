@@ -18,7 +18,8 @@ namespace Elephantile
         [SerializeField] private Karaoke mKaraoke;
         [SerializeField] private int mMaxLives = 3;
         [SerializeField] private HealthMeter mHealthMeter;
-
+        [SerializeField] private FeedbackGroup mFeedbackGroup;
+        
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
 
@@ -150,10 +151,12 @@ namespace Elephantile
             {
                 exclude = chosenView;
                 mNotePlayer.PlayNote(expected.pitch);
+                mFeedbackGroup.PlayHappyFace();
             }
             else
             {
                 mNotePlayer.PlayFailureSound();
+                mFeedbackGroup.PlaySadFace();
                 --mLivesLeft;
                 mHealthMeter?.SetHealth(mLivesLeft);
                 if (mLivesLeft <= 0)
@@ -246,6 +249,7 @@ namespace Elephantile
             mLevelState = LevelState.Game;
             base.ResetChallenge();
             SetHealth(mMaxLives);
+            mFeedbackGroup.Reset();
             foreach (var noteView in mCandidateViews.SelectMany(x => x))
             {
                 noteView.UnFade();

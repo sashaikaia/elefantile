@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -37,10 +38,12 @@ namespace Elephantile
         private int mArrowInput = 1;
 
         private int mLivesLeft;
+        [SerializeField] private GameObject text;
 
         private void Awake()
         {
             mLivesLeft = mMaxLives;
+            text.SetActive(false);
             mMainCamera.transform.MatchXY(mKaraoke.transform.position);
             mLevelData = mNoteDb.ParseLevel(levelText);
             GenerateCandidates();
@@ -165,14 +168,14 @@ namespace Elephantile
                 mHealthMeter?.SetHealth(mLivesLeft);
                 if (mLivesLeft <= 0)
                 {
-                    IEnumerator DoRestartLevel()
-                    {
-                        yield return new WaitForSeconds(1.0f);
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                    }
-
+                    // IEnumerator DoRestartLevel()
+                    // {
+                    //     yield return new WaitForSeconds(1.0f);
+                    //     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    // }
+                    text.SetActive(true);
                     mLevelState = LevelState.Failed;
-                    StartCoroutine(DoRestartLevel());
+                    // StartCoroutine(DoRestartLevel());
                     return;
                 }
             }
@@ -253,6 +256,7 @@ namespace Elephantile
             mLevelState = LevelState.Game;
             base.ResetChallenge();
             SetHealth(mMaxLives);
+            text.SetActive(false);
             mFeedbackGroup.Reset();
             
             foreach (var noteView in mCandidateViews.SelectMany(x => x))

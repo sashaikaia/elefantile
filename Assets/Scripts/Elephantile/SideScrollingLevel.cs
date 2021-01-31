@@ -21,8 +21,8 @@ namespace Elephantile
         [SerializeField] private HealthMeter mHealthMeter;
         [SerializeField] private FeedbackGroup mFeedbackGroup;
         [SerializeField] private Transform mPayoffScreen;
-
-        
+        [SerializeField] private SoundTrack mSoundTrack;
+        [SerializeField] private float mIntervalBetweenNotes;
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
 
@@ -41,6 +41,7 @@ namespace Elephantile
 
         private int mLivesLeft;
         [SerializeField] private GameObject text;
+        private int mStreakLevel = 1;
 
         private void Awake()
         {
@@ -126,7 +127,9 @@ namespace Elephantile
             {
                 ReadQweInput();
                 if (mAcceptingInput) ProcessQweInput();
-            } else {
+            }
+            else
+            {
                 ReadQweInput();
             }
         }
@@ -162,6 +165,7 @@ namespace Elephantile
                 exclude = chosenView;
                 mNotePlayer.PlayNote(expected.pitch);
                 mFeedbackGroup.PlayHappyFace();
+                mStreakLevel = Mathf.Min(mStreakLevel + 1, 2);
             }
             else
             {
@@ -169,6 +173,7 @@ namespace Elephantile
                 mFeedbackGroup.PlaySadFace();
                 --mLivesLeft;
                 mHealthMeter?.SetHealth(mLivesLeft);
+                mStreakLevel = 0;
                 if (mLivesLeft <= 0)
                 {
                     // IEnumerator DoRestartLevel()
@@ -182,30 +187,40 @@ namespace Elephantile
                     return;
                 }
             }
-            
+
+            var streakNormalized = mStreakLevel / 2.0f;
+            FMODUnity.RuntimeManager.StudioSystem.setParameterByName("streak", streakNormalized);
+            mSoundTrack.PlayCorrectNote();
+
             AdvanceNote();
-            
+
             if (IsEndOfLevel())
             {
-                IEnumerator DoTransitionToPayoff()
-                {
-                    yield return new WaitForSeconds(0.5f);
-                    mLevelState = LevelState.Payoff;
-
-                    var pos = mMainCamera.transform.position;
-                    pos.x = mPayoffScreen.position.x;
-                    pos.y = mPayoffScreen.position.y;
-                    yield return mMainCamera.transform.DOMove(pos, 1.5f).WaitForCompletion();
-                    mPayoffScreen.GetComponent<PayoffScreenBase>().Play();
-                }
-
-                mAcceptingInput = false;
-                StartCoroutine(DoTransitionToPayoff());
+                TransitionToPayoff();
             }
             else
             {
                 DoColumnTransition(exclude);
             }
+        }
+
+        private void TransitionToPayoff()
+        {
+            IEnumerator DoTransitionToPayoff()
+            {
+                yield return new WaitForSeconds(0.5f);
+                mLevelState = LevelState.Payoff;
+
+                var pos = mMainCamera.transform.position;
+                pos.x = mPayoffScreen.position.x;
+                pos.y = mPayoffScreen.position.y;
+                yield return mMainCamera.transform.DOMove(pos, 1.5f).WaitForCompletion();
+                mPayoffScreen.GetComponent<PayoffScreenBase>().Play();
+            }
+
+            mAcceptingInput = false;
+            mSoundTrack.PlayCorrectNote();
+            StartCoroutine(DoTransitionToPayoff());
         }
 
         private void DoColumnTransition(NoteView exclude)
@@ -215,6 +230,7 @@ namespace Elephantile
                 if (exclude == noteView) continue;
                 noteView.Fade();
             }
+
             StartCoroutine(CrtDoMoveLeft());
         }
 
@@ -222,7 +238,7 @@ namespace Elephantile
         {
             var x = mCandidatesParent.localPosition.x;
             mAcceptingInput = false;
-            yield return mCandidatesParent.DOLocalMoveX(x - 1.0f, 0.2f).WaitForCompletion();
+            yield return mCandidatesParent.DOLocalMoveX(x - 1.0f, 0.8f).WaitForCompletion();
             mAcceptingInput = true;
         }
 
@@ -260,22 +276,28 @@ namespace Elephantile
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+            else if (Input.GetKeyDown(KeyCode.F9))
+            {
+                TransitionToPayoff();
+            }
         }
 
         public override void ResetChallenge()
         {
             if (mLevelState != LevelState.Game && mLevelState != LevelState.Failed) return;
+            
+            mSoundTrack.ResetTrack();
             mLevelState = LevelState.Game;
             base.ResetChallenge();
             SetHealth(mMaxLives);
             text.SetActive(false);
             mFeedbackGroup.Reset();
-            
+
             foreach (var noteView in mCandidateViews.SelectMany(x => x))
             {
                 noteView.Fade(0.0f);
             }
-            
+
             Destroy(mCandidatesParent.gameObject, 0.2f);
             mCandidatesParent = null;
             GenerateCandidates();

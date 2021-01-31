@@ -198,7 +198,6 @@
 			<destination>{3ea20087-38b7-4ba4-b98d-90b657b3f00d}</destination>
 			<destination>{c55edc86-4d76-4f3d-80b4-3c1ef9ab0c7f}</destination>
 			<destination>{195b6ddc-5909-4e7e-8677-d52a443c513c}</destination>
-			<destination>{4579dbfb-3a08-4bbf-9302-c7b09a3d05e6}</destination>
 		</relationship>
 	</object>
 	<object class="ParameterProxy" id="{93a34c55-af82-4fb6-be73-b2daccd6e465}">
@@ -950,17 +949,6 @@
 	<object class="SustainPoint" id="{195b6ddc-5909-4e7e-8677-d52a443c513c}">
 		<property name="position">
 			<value>25.384615384615387</value>
-		</property>
-		<relationship name="timeline">
-			<destination>{6dec44f3-e79b-434d-ba68-94dea89250f9}</destination>
-		</relationship>
-		<relationship name="markerTrack">
-			<destination>{b60cd033-fe5c-45af-b1dd-2f5520c779b1}</destination>
-		</relationship>
-	</object>
-	<object class="SustainPoint" id="{4579dbfb-3a08-4bbf-9302-c7b09a3d05e6}">
-		<property name="position">
-			<value>51.692307692307693</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{6dec44f3-e79b-434d-ba68-94dea89250f9}</destination>

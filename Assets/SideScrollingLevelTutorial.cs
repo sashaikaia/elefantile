@@ -20,6 +20,8 @@ namespace Elephantile
         [SerializeField] private HealthMeter mHealthMeter;
         [SerializeField] private FeedbackGroup mFeedbackGroup;
 
+        private int mStreakLevel = 1;
+        
         [FormerlySerializedAs("mNotViewPrefab")]
         [SerializeField]
         private NoteView mNoteViewPrefab;

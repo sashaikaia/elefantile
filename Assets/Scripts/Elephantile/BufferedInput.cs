@@ -2,18 +2,18 @@
 
 namespace Elephantile
 {
-    public class BufferedInput
+    public class BufferedInput<T> where T : struct
     {
-        private KeyCode? mKey;
+        private T? mKey;
         private float mDeadBy;
 
-        public void SetKey(KeyCode key, float life = 0.1f)
+        public void SetKey(T key, float life = 0.1f)
         {
             mKey = key;
             mDeadBy = Time.time + life;
         }
 
-        public KeyCode? ReadKey()
+        public T? ReadKey()
         {
             if (Time.time >= mDeadBy) mKey = null;
             var ret = mKey;

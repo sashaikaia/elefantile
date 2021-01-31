@@ -21,9 +21,14 @@ namespace Elephantile
             mSpriteRenderer.DOColor(color, duration);
         }
 
-        public void PunchScale(float factor = 1.05f, float duration = 0.2f)
+        public Tweener PunchScale(float factor = 1.05f, float duration = 0.2f)
         {
-            transform.DOPunchScale(Vector3.one * factor, duration);
+            return transform.DOPunchScale(Vector3.one * factor, duration);
+        }
+        
+        public Tweener PunchScale(Vector3 factor, float duration = 0.2f)
+        {
+            return transform.DOPunchScale(factor, duration);
         }
         
         public void SetNote(NoteDefinition note)

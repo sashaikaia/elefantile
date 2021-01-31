@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 namespace Elephantile
@@ -14,8 +15,11 @@ namespace Elephantile
 
         [SerializeField] private NotePlayer mNotePlayer;
         [SerializeField] private Karaoke mKaraoke;
+
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
+
+        [SerializeField] private Camera mMainCamera;
 
         private LevelDefinition mLevelData;
         private LevelState mLevelState = LevelState.Intro;
@@ -28,10 +32,11 @@ namespace Elephantile
         private List<List<NoteView>> mCandidateViews = new List<List<NoteView>>();
         private int mNextColumnIndex = 0;
 
+
         private void Awake()
         {
+            mMainCamera.transform.MatchXY(mKaraoke.transform.position);
             mLevelData = mNoteDb.ParseLevel(levelText);
-            StartCoroutine(mKaraoke.doKaraoke(mLevelData));
             GenerateCandidates();
             CreateCandidateGameObjects();
             StartCoroutine(CrtRunLevel());
@@ -85,8 +90,9 @@ namespace Elephantile
 
         private IEnumerator CrtRunLevel()
         {
+            yield return StartCoroutine(mKaraoke.DoKaraoke(mLevelData));
+            yield return mMainCamera.transform.DOMove(Vector3.back * 10f, 2.0f).WaitForCompletion();
             mLevelState = LevelState.Game;
-            yield break;
         }
 
         private void Update()
@@ -110,15 +116,14 @@ namespace Elephantile
             var currentSong = 0; // CHANGE ME LATER TO UPDATE AFTER EACH CHAPTER
 
             SubmitNote(chosenNote, chosenNoteView);
-            
+
             // mNoteSubmitter.SubmitNote(chosenNote.pitch, currentSong);
-            
         }
 
         private void SubmitNote(NoteDefinition chosenNote, NoteView chosenView)
         {
             var expected = GetExpectedNote();
-            
+
             NoteView exclude = null;
             if (expected.pitch == chosenNote.pitch)
             {
@@ -129,8 +134,13 @@ namespace Elephantile
             {
                 mNotePlayer.PlayFailureSound();
             }
+
             chosenView.PunchScale(1.05f, 0.2f);
             AdvanceNote();
+            if (IsEndOfLevel())
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
             DoColumnTransition(exclude);
         }
 

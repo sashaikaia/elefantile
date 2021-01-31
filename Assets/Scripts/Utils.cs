@@ -38,4 +38,12 @@ public static class Utils
         pos.y = newY;
         tr.localPosition = pos;
     }
+
+    public static void MatchXY(this Transform tr, Vector3 other)
+    {
+        var pos = tr.position;
+        pos.x = other.x;
+        pos.y = other.y;
+        tr.position = pos;
+    }
 }

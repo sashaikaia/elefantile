@@ -65,7 +65,7 @@ public class Karaoke : MonoBehaviour
     private NoteView NoteViewFor(NoteDefinition definition, int rowId, int colId)
     {
         var view = Instantiate(mNoteViewPrefab, mRootTransform);
-        Vector2 position = new Vector2(colId - 3, -rowId);
+        Vector2 position = new Vector2(colId, -rowId);
         view.transform.localPosition = position;
         view.SetNote(definition);
         return view;

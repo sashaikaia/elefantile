@@ -126,15 +126,15 @@ namespace Elephantile
 
         private void ReadQweInput()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 mQweInput.SetKey(2);
             }
-            else if (Input.GetKeyDown(KeyCode.W))
+            else if (Input.GetKeyDown(KeyCode.S))
             {
                 mQweInput.SetKey(1);
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.X))
             {
                 mQweInput.SetKey(0);
             }

@@ -31,7 +31,8 @@ public class Karaoke : MonoBehaviour
 
             foreach (var note in row)
             {
-                yield return note.noteView.PunchScale(1.005f, 0.1f).WaitForCompletion();
+                note.noteView.PunchScale(1.005f, 0.3f);
+                yield return new WaitForSeconds(0.1f);
                 mNotePlayer.PlayNote(note.definition.pitch);
                 yield return new WaitForSeconds(0.5f);
             }

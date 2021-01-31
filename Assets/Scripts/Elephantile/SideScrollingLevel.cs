@@ -50,6 +50,7 @@ namespace Elephantile
 
         private void GenerateCandidates()
         {
+            mCandidateDefinitions = new List<List<NoteDefinition>>();
             var correctPos = new List<int>();
             for (var i = 0; i < mLevelData.Count; ++i)
             {
@@ -78,6 +79,7 @@ namespace Elephantile
 
         private void CreateCandidateGameObjects()
         {
+            mCandidateViews = new List<List<NoteView>>();
             int colId = 0;
             var parent = new GameObject("candidates_parent");
             mCandidatesParent = parent.transform;
@@ -94,6 +96,8 @@ namespace Elephantile
                     var noteView = Instantiate(mNoteViewPrefab, parent.transform);
                     noteView.transform.localPosition = noteViewPos;
                     noteView.SetNote(column[i]);
+                    noteView.Fade(0.0f, 0.0f);
+                    noteView.UnFade(1.0f);
                     columnView.Add(noteView);
                 }
 
@@ -250,10 +254,15 @@ namespace Elephantile
             base.ResetChallenge();
             SetHealth(mMaxLives);
             mFeedbackGroup.Reset();
+            
             foreach (var noteView in mCandidateViews.SelectMany(x => x))
             {
-                noteView.UnFade();
+                noteView.Fade();
             }
+            
+            Destroy(mCandidatesParent.gameObject, 0.2f);
+            GenerateCandidates();
+            CreateCandidateGameObjects();
 
             mCandidatesParent.DOMoveX(0.0f, 0.5f);
         }

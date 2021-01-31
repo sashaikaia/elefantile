@@ -13,7 +13,7 @@ namespace Elephantile
         public string levelText = "";
 
         [SerializeField] private NotePlayer mNotePlayer;
-        
+        [SerializeField] private Karaoke mKaraoke;
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
 
@@ -31,6 +31,7 @@ namespace Elephantile
         private void Awake()
         {
             mLevelData = mNoteDb.ParseLevel(levelText);
+            StartCoroutine(mKaraoke.doKaraoke(mLevelData));
             GenerateCandidates();
             CreateCandidateGameObjects();
             StartCoroutine(CrtRunLevel());

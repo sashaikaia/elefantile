@@ -27,12 +27,12 @@ public class Karaoke : MonoBehaviour
     {
         
     }
-    IEnumerator doKaraoke()
+    public IEnumerator doKaraoke(LevelDefinition level)
     {
+        LoadCorrectResult(level);
         yield return new WaitForSeconds(mInterval);
-
-
     }
+    
     public void LoadCorrectResult(LevelDefinition level)
     {
 
@@ -61,7 +61,7 @@ public class Karaoke : MonoBehaviour
         var view = Instantiate(mNoteViewPrefab, mRootTransform);
         Vector2 position = new Vector2(colId, -rowId);
         view.transform.localPosition = position;
-
+        view.SetNote(definition);
         return view;
     }
 }

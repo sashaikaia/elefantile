@@ -1148,7 +1148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mNoteDb: {fileID: 11400000, guid: 1434929e3289f694a938043b94dada08, type: 2}
-  levelText: ABCDEFG
+  levelText: GFEFA;ABCDEFG
   mNotePlayer: {fileID: 1248752964}
   mKaraoke: {fileID: 1225957003}
   mNoteViewPrefab: {fileID: 8418867891361567873, guid: 5eba470c5c2d4ac45aa16bc7c6e5a6a7, type: 3}

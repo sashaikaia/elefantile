@@ -8,9 +8,10 @@ public static class Utils
         for (var i = 0; i < list.Count; ++i)
         {
             var rand = Random.Range(0, list.Count - i);
+            var target = rand + i;
             var temp = list[i];
-            list[i] = list[rand];
-            list[rand] = temp;
+            list[i] = list[target];
+            list[target] = temp;
         }
     }
 

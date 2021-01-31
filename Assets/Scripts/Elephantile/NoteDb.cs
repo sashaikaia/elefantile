@@ -19,11 +19,27 @@ namespace Elephantile
         public LevelDefinition ParseLevel(string levelText)
         {
             var result = new LevelDefinition();
+            var currentPhrase = new List<NoteDefinition>();
             foreach (var c in levelText)
             {
+                if (c >= 'A' || c >= 'G')
+                {
+                    currentPhrase.Add(LookUp(c));
+                }
+                else if (c == ';' && currentPhrase.Count > 0)
+                {
+                    result.AddPhrase(currentPhrase);
+                    currentPhrase = new List<NoteDefinition>();
+                }
+
                 if (c < 'A' || c > 'G') continue;
-                result.Add(LookUp(c));
             }
+
+            if (currentPhrase.Count > 0)
+            {
+                result.AddPhrase(currentPhrase);
+            }
+
             return result;
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Karaoke : MonoBehaviour
 {
-    private List<List<Note>> notes = new List<List<Note>>();
+    private List<List<Note>> mNotes = new List<List<Note>>();
     public float mInterval;
     [SerializeField] private int maxRows;
     [SerializeField] NoteView mNoteViewPrefab;
@@ -23,9 +23,9 @@ public class Karaoke : MonoBehaviour
     {
         LoadCorrectResult(level);
 
-        for (int rowId = 0; rowId < notes.Count; ++rowId)
+        for (int rowId = 0; rowId < mNotes.Count; ++rowId)
         {
-            var row = notes[rowId];
+            var row = mNotes[rowId];
             var y = mRootTransform.localPosition.y;
             y += 1.0f;
 
@@ -36,7 +36,7 @@ public class Karaoke : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
             }
 
-            if (rowId < notes.Count - 1)
+            if (rowId < mNotes.Count - 1)
                 yield return mRootTransform.DOLocalMoveY(y, 0.2f).WaitForCompletion();
         }
 
@@ -46,32 +46,23 @@ public class Karaoke : MonoBehaviour
     public void LoadCorrectResult(LevelDefinition level)
     {
         var rowId = 0;
-        var colId = 0;
-        var targetTrack = new List<Note>();
-
-        void CommitTarget()
+        foreach (var phrase in level.Phrases)
         {
-            ++rowId;
-            colId = 0;
-            notes.Add(targetTrack);
-            targetTrack = new List<Note>();
-        }
-
-        foreach (var correctKey in level)
-        {
-            var tempNote = new Note {definition = correctKey, noteView = noteViewFor(correctKey, rowId, colId)};
-            targetTrack.Add(tempNote);
-            ++colId;
-            if (colId >= maxRows)
+            var colId = 0;
+            var currentRow = new List<Note>();
+            foreach (var noteDef in phrase)
             {
-                CommitTarget();
+                var tempNote = new Note {definition = noteDef, noteView = NoteViewFor(noteDef, rowId, colId)};
+                currentRow.Add(tempNote);
+                ++colId;
             }
-        }
 
-        if (colId > 0) CommitTarget();
+            mNotes.Add(currentRow);
+            ++rowId;
+        }
     }
 
-    private NoteView noteViewFor(NoteDefinition definition, int rowId, int colId)
+    private NoteView NoteViewFor(NoteDefinition definition, int rowId, int colId)
     {
         var view = Instantiate(mNoteViewPrefab, mRootTransform);
         Vector2 position = new Vector2(colId - 3, -rowId);

@@ -6,6 +6,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 namespace Elephantile
 {
@@ -31,6 +32,7 @@ namespace Elephantile
         private Transform mCandidatesParent;
         private List<List<NoteView>> mCandidateViews = new List<List<NoteView>>();
         private int mNextColumnIndex = 0;
+        private int mArrowInput = 1;
 
 
         private void Awake()
@@ -44,8 +46,17 @@ namespace Elephantile
 
         private void GenerateCandidates()
         {
-            foreach (var correct in mLevelData)
+            var correctPos = new List<int>();
+            for (var i = 0; i < mLevelData.Count; ++i)
             {
+                correctPos.Add(i % 3);
+            }
+
+            correctPos.Shuffle();
+
+            for (var index = 0; index < mLevelData.Count; index++)
+            {
+                var correct = mLevelData[index];
                 var column = mNoteDb
                     .notes
                     .Where(n => n.pitch != correct.pitch).ToList();
@@ -54,7 +65,8 @@ namespace Elephantile
                 column.Backfill(2);
                 column.RemoveExcess(2);
                 column.Add(correct);
-                column.Shuffle();
+                var target = correctPos[index];
+                (column[2], column[target]) = (column[target], column[2]);
 
                 mCandidateDefinitions.Add(column);
             }
@@ -109,6 +121,7 @@ namespace Elephantile
             var maybeKey = mQweInput.ReadKey();
             if (maybeKey is null) return;
 
+            mArrowInput = maybeKey.Value;
             var currentColumn = mCandidateDefinitions[mNextColumnIndex];
             var currentViewColumn = mCandidateViews[mNextColumnIndex];
             var chosenNoteView = currentViewColumn[maybeKey.Value];
@@ -122,6 +135,8 @@ namespace Elephantile
 
         private void SubmitNote(NoteDefinition chosenNote, NoteView chosenView)
         {
+            if (IsEndOfLevel()) return;
+
             var expected = GetExpectedNote();
 
             NoteView exclude = null;
@@ -136,12 +151,23 @@ namespace Elephantile
             }
 
             chosenView.PunchScale(1.05f, 0.2f);
+            
             AdvanceNote();
             if (IsEndOfLevel())
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                IEnumerator DoTransitionToPayoff()
+                {
+                    yield return new WaitForSeconds(1.0f);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
+
+                mAcceptingInput = false;
+                StartCoroutine(DoTransitionToPayoff());
             }
-            DoColumnTransition(exclude);
+            else
+            {
+                DoColumnTransition(exclude);
+            }
         }
 
         private void DoColumnTransition(NoteView exclude)
@@ -177,6 +203,18 @@ namespace Elephantile
             else if (Input.GetKeyDown(KeyCode.X))
             {
                 mQweInput.SetKey(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                mQweInput.SetKey((mArrowInput + 1 + 3) % 3);
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                mQweInput.SetKey((mArrowInput - 1 + 3) % 3);
+            }
+            else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                mQweInput.SetKey(mArrowInput);
             }
         }
 

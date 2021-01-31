@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="AudioFile" id="{f1631007-2479-4f39-b9a9-c56eaccc7553}">
+		<property name="assetPath">
+			<value>piano_note_03_e1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.2765986394557822</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{4bef3497-da15-4175-8f8f-2570b7f59a8e}</destination>
+		</relationship>
+	</object>
+</objects>

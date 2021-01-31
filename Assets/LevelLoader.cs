@@ -20,7 +20,6 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        if (SceneManager.GetActiveScene().buildIndex < 2)
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex+1));
 
     }

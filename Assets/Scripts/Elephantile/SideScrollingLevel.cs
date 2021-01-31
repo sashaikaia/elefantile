@@ -59,6 +59,7 @@ namespace Elephantile
             int colId = 0;
             var parent = new GameObject("candidates_parent");
             mCandidatesParent = parent.transform;
+            mCandidatesParent.localScale = Vector3.one * 1.2f;
             parent.transform.localPosition = Vector3.zero;
 
             foreach (var column in mCandidateDefinitions)

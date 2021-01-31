@@ -10,14 +10,15 @@ namespace Elephantile {
         private LevelDefinition mLevelDef;
         private int mLevelDefIndex;
         [SerializeField] private LevelBase mLevelBase;
-        [SerializeField] private NotePlayer mNotePlayer;
+        [SerializeField] private MusicPlayer mNotePlayer;
         public void Awake() {
             mLevelDef = mLevelBase.GetDefinition();
             mLevelDefIndex = 0;
         }
-        public void SubmitNote(char n) {
-            if (true) { //mLevelDef[mLevelDefIndex].pitch == n) {
-                mNotePlayer.PlayNote(0); // CHANGE ME LATER
+        public void SubmitNote(char n, int songIndex) {
+            // TODO: mLevelDefIndex needs to jump +3, or mLevelDef needs to contain only the capital letters
+            if (mLevelDef[mLevelDefIndex].pitch == n) {
+                mNotePlayer.PlayNote(songIndex);
             } else {
                 onError();
             }
@@ -25,6 +26,7 @@ namespace Elephantile {
 
         private void onError() {
             Debug.Log("wrong note");
+            // TODO: somehow needs to skip FMOD's current cue/sustain point
         }
     }
 }

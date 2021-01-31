@@ -105,7 +105,8 @@ namespace Elephantile
 
             var currentColumn = mCandidateDefinitions[mNextColumnIndex];
             var chosenNote = currentColumn[maybeKey.Value];
-            mNoteSubmitter.SubmitNote(chosenNote.pitch);
+            var currentSong = 0; // CHANGE ME LATER TO UPDATE AFTER EACH CHAPTER
+            mNoteSubmitter.SubmitNote(chosenNote.pitch, currentSong);
             
             foreach (var noteView in mCandidateViews[mNextColumnIndex])
             {

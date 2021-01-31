@@ -126,6 +126,8 @@ namespace Elephantile
             {
                 ReadQweInput();
                 if (mAcceptingInput) ProcessQweInput();
+            } else {
+                ReadQweInput();
             }
         }
 

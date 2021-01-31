@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.00.00">
+	<object class="EventFolder" id="{9e29002c-f20c-44ff-91ee-151d3ba3bee4}">
+		<property name="name">
+			<value>tutorial-lullaby</value>
+		</property>
+		<relationship name="folder">
+			<destination>{8eea64c6-990e-42d6-bd0c-257e2bdb383d}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -16,12 +16,8 @@ namespace Elephantile
 
         [SerializeField] private NotePlayer mNotePlayer;
         [SerializeField] private Karaoke mKaraoke;
-        [SerializeField] private int mMaxLives = 3;
-        [SerializeField] private HealthMeter mHealthMeter;
-        [SerializeField] private FeedbackGroup mFeedbackGroup;
 
-        [FormerlySerializedAs("mNotViewPrefab")]
-        [SerializeField]
+        [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
 
         [SerializeField] private Camera mMainCamera;
@@ -37,11 +33,9 @@ namespace Elephantile
         private List<List<NoteView>> mCandidateViews = new List<List<NoteView>>();
         private int mArrowInput = 1;
 
-        private int mLivesLeft;
 
         private void Awake()
         {
-            mLivesLeft = mMaxLives;
             mMainCamera.transform.MatchXY(mKaraoke.transform.position);
             mLevelData = mNoteDb.ParseLevel(levelText);
             GenerateCandidates();
@@ -100,25 +94,19 @@ namespace Elephantile
                     noteView.transform.localPosition = noteViewPos;
                     noteView.SetNote(column[i]);
 
-                    
-                    print("expected pitch "+expected.pitch+ ", note pitch " + column[i].pitch);
+                    //for tutorial, fade out the incorrect notes
                     if (expected.pitch != column[i].pitch)
                     {
                         noteView.Fade(0.2f, 0.0f);
-                    } else
-                    {
-                        print("right note, no fade for you");
                     }
-                    
-                    //noteView.UnFade(1.0f);
                     columnView.Add(noteView);
                 }
                 
                 mCandidateViews.Add(columnView);
                 ++colId;
             }
+            //then reset to the first note before gameplay
             base.ResetChallenge();
-            print("after reset, expected note index is "+GetIndexOfExpectedNote());
         }
 
         public override LevelDefinition GetDefinition() => mLevelData;
@@ -135,7 +123,13 @@ namespace Elephantile
             if (mLevelState == LevelState.Game)
             {
                 ReadQweInput();
-                if (mAcceptingInput) ProcessQweInput();
+                if (mAcceptingInput)
+                {
+                    ProcessQweInput();
+                }
+            } else
+            {
+                ReadQweInput();
             }
         }
 
@@ -149,8 +143,7 @@ namespace Elephantile
             var currentViewColumn = mCandidateViews[GetIndexOfExpectedNote()];
             var chosenNoteView = currentViewColumn[maybeKey.Value];
             var chosenNote = currentColumn[maybeKey.Value];
-            var currentSong = 0; // CHANGE ME LATER TO UPDATE AFTER EACH CHAPTER
-
+            
             SubmitNote(chosenNote, chosenNoteView);
 
             // mNoteSubmitter.SubmitNote(chosenNote.pitch, currentSong);
@@ -162,51 +155,32 @@ namespace Elephantile
 
             var expected = GetExpectedNote();
 
-            chosenView.PunchScale(1.05f, 0.2f);
-
             NoteView exclude = null;
 
+            //in tutorial, only respond to correct input
             if (expected.pitch == chosenNote.pitch)
             {
+                chosenView.PunchScale(1.05f, 0.2f);
                 exclude = chosenView;
                 mNotePlayer.PlayNote(expected.pitch);
-                //mFeedbackGroup.PlayHappyFace();
-            }
-            else
-            {
-                mNotePlayer.PlayFailureSound();
-                //mFeedbackGroup.PlaySadFace();
-                --mLivesLeft;
-                mHealthMeter?.SetHealth(mLivesLeft);
-                if (mLivesLeft <= 0)
+          
+
+                if (IsEndOfLevel())
                 {
-                    IEnumerator DoRestartLevel()
+                    IEnumerator DoTransitionToPayoff()
                     {
                         yield return new WaitForSeconds(1.0f);
+                        mLevelState = LevelState.Payoff;
                         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                     }
 
-                    mLevelState = LevelState.Failed;
-                    StartCoroutine(DoRestartLevel());
-                    return;
+                    mAcceptingInput = false;
+                    StartCoroutine(DoTransitionToPayoff());
                 }
-            }
-
-            if (IsEndOfLevel())
-            {
-                IEnumerator DoTransitionToPayoff()
+                else
                 {
-                    yield return new WaitForSeconds(1.0f);
-                    mLevelState = LevelState.Payoff;
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    DoColumnTransition(exclude);
                 }
-
-                mAcceptingInput = false;
-                StartCoroutine(DoTransitionToPayoff());
-            }
-            else
-            {
-                DoColumnTransition(exclude);
             }
         }
 
@@ -268,8 +242,6 @@ namespace Elephantile
             if (mLevelState != LevelState.Game && mLevelState != LevelState.Failed) return;
             mLevelState = LevelState.Game;
             base.ResetChallenge();
-            SetHealth(mMaxLives);
-            //mFeedbackGroup.Reset();
 
             foreach (var noteView in mCandidateViews.SelectMany(x => x))
             {
@@ -283,11 +255,6 @@ namespace Elephantile
             mCandidatesParent.DOMoveX(0.0f, 0.5f);
         }
 
-        private void SetHealth(int health)
-        {
-            mLivesLeft = health;
-            mHealthMeter.SetHealth(health);
-        }
 
         private enum LevelState
         {

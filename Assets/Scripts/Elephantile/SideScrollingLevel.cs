@@ -117,6 +117,7 @@ namespace Elephantile
         private void SubmitNote(NoteDefinition chosenNote, NoteView view)
         {
             var expected = GetExpectedNote();
+            
             if (expected.pitch == chosenNote.pitch)
             {
                 mNotePlayer.PlayNote(expected.pitch);
@@ -126,6 +127,7 @@ namespace Elephantile
                 mNotePlayer.PlayFailureSound();
             }
             view.PunchScale(1.05f, 0.2f);
+            AdvanceNote();
         }
 
         private void DoColumnTransition()

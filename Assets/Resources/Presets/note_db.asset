@@ -14,23 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notes:
   - pitch: 65
-    sprite: {fileID: 21300000, guid: a74ffcbad58c8d047b8700b42339ab27, type: 3}
-    color: {r: 1, g: 0.3537736, b: 0.3537736, a: 1}
+    sprite: {fileID: -5285731212905319201, guid: 57d98e93079360e439454b9ee83bd2a0, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - pitch: 66
-    sprite: {fileID: 21300000, guid: a74ffcbad58c8d047b8700b42339ab27, type: 3}
-    color: {r: 0.6579527, g: 0.9150943, b: 0.5222944, a: 1}
+    sprite: {fileID: 4103340698133685846, guid: 57d98e93079360e439454b9ee83bd2a0, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - pitch: 67
-    sprite: {fileID: 21300000, guid: a74ffcbad58c8d047b8700b42339ab27, type: 3}
-    color: {r: 0.21226418, g: 0.29414672, b: 1, a: 1}
+    sprite: {fileID: 8110080913673185933, guid: 57d98e93079360e439454b9ee83bd2a0, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - pitch: 68
-    sprite: {fileID: 21300000, guid: a74ffcbad58c8d047b8700b42339ab27, type: 3}
-    color: {r: 0.051886797, g: 1, b: 0.5147595, a: 1}
+    sprite: {fileID: -6331556883643822243, guid: 57d98e93079360e439454b9ee83bd2a0, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - pitch: 69
-    sprite: {fileID: 21300000, guid: a74ffcbad58c8d047b8700b42339ab27, type: 3}
-    color: {r: 0.53567946, g: 0.15566039, b: 1, a: 1}
+    sprite: {fileID: -5964461195565979260, guid: 57d98e93079360e439454b9ee83bd2a0, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - pitch: 70
-    sprite: {fileID: 21300000, guid: a74ffcbad58c8d047b8700b42339ab27, type: 3}
-    color: {r: 1, g: 0.24056602, b: 0.24056602, a: 1}
+    sprite: {fileID: -5435224139530830822, guid: 57d98e93079360e439454b9ee83bd2a0, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}
   - pitch: 71
-    sprite: {fileID: 21300000, guid: a74ffcbad58c8d047b8700b42339ab27, type: 3}
-    color: {r: 0.754717, g: 0.13883947, b: 0.61701536, a: 1}
+    sprite: {fileID: -8595514980131432603, guid: 57d98e93079360e439454b9ee83bd2a0, type: 3}
+    color: {r: 1, g: 1, b: 1, a: 1}

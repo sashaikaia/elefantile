@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 // initializes and maps char to note sound clips
@@ -7,7 +8,8 @@ using UnityEngine;
 public class NotePlayer : MonoBehaviour
 {
     [SerializeField] private List<FMODUnity.StudioEventEmitter> mNoteList;
-
+    [SerializeField] private StudioEventEmitter mWrongSoundEmitter;
+    
     private Dictionary<char, FMODUnity.StudioEventEmitter> mNoteMapper;
 
     // private const int mMaxNumNotes = 7;
@@ -34,6 +36,6 @@ public class NotePlayer : MonoBehaviour
 
     public void PlayFailureSound()
     {
-        Debug.Log("[TODO] Player note missed sound here.");
+        mWrongSoundEmitter.Play();
     }
 }

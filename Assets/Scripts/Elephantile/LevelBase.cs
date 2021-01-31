@@ -24,5 +24,15 @@ namespace Elephantile
         {
             return mIndexOfExpectedNote >= GetDefinition().Count;
         }
+
+        public virtual void ResetChallenge()
+        {
+            mIndexOfExpectedNote = 0;
+        }
+
+        public virtual int GetIndexOfExpectedNote()
+        {
+            return mIndexOfExpectedNote;
+        }
     }
 }

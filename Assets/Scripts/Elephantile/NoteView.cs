@@ -46,6 +46,13 @@ namespace Elephantile
         {
             
         }
+
+        public void UnFade(float duration = 0.2f)
+        {
+            var color = mSpriteRenderer.color;
+            color.a = 1.0f;
+            mSpriteRenderer.DOColor(color, duration);
+        }
     }
 
     public class KeyHintView : MonoBehaviour

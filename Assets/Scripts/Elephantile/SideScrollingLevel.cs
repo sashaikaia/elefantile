@@ -18,7 +18,7 @@ namespace Elephantile
         [SerializeField] private Karaoke mKaraoke;
         [SerializeField] private int mMaxLives = 3;
         [SerializeField] private HealthMeter mHealthMeter;
-        
+
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
 
@@ -33,7 +33,6 @@ namespace Elephantile
 
         private Transform mCandidatesParent;
         private List<List<NoteView>> mCandidateViews = new List<List<NoteView>>();
-        private int mNextColumnIndex = 0;
         private int mArrowInput = 1;
 
         private int mLivesLeft;
@@ -126,8 +125,8 @@ namespace Elephantile
             if (maybeKey is null) return;
 
             mArrowInput = maybeKey.Value;
-            var currentColumn = mCandidateDefinitions[mNextColumnIndex];
-            var currentViewColumn = mCandidateViews[mNextColumnIndex];
+            var currentColumn = mCandidateDefinitions[GetIndexOfExpectedNote()];
+            var currentViewColumn = mCandidateViews[GetIndexOfExpectedNote()];
             var chosenNoteView = currentViewColumn[maybeKey.Value];
             var chosenNote = currentColumn[maybeKey.Value];
             var currentSong = 0; // CHANGE ME LATER TO UPDATE AFTER EACH CHAPTER
@@ -170,8 +169,7 @@ namespace Elephantile
                     return;
                 }
             }
-            
-            AdvanceNote();
+
             if (IsEndOfLevel())
             {
                 IEnumerator DoTransitionToPayoff()
@@ -192,13 +190,13 @@ namespace Elephantile
 
         private void DoColumnTransition(NoteView exclude)
         {
-            foreach (var noteView in mCandidateViews[mNextColumnIndex])
+            foreach (var noteView in mCandidateViews[GetIndexOfExpectedNote()])
             {
                 if (exclude == noteView) continue;
                 noteView.Fade();
             }
 
-            ++mNextColumnIndex;
+            AdvanceNote();
             StartCoroutine(CrtDoMoveLeft());
         }
 
@@ -236,8 +234,31 @@ namespace Elephantile
             {
                 mQweInput.SetKey(mArrowInput);
             }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                ResetChallenge();
+            }
         }
 
+        public override void ResetChallenge()
+        {
+            if (mLevelState != LevelState.Game && mLevelState != LevelState.Failed) return;
+            mLevelState = LevelState.Game;
+            base.ResetChallenge();
+            SetHealth(mMaxLives);
+            foreach (var noteView in mCandidateViews.SelectMany(x => x))
+            {
+                noteView.UnFade();
+            }
+
+            mCandidatesParent.DOMoveX(0.0f, 0.5f);
+        }
+
+        private void SetHealth(int health)
+        {
+            mLivesLeft = health;
+            mHealthMeter.SetHealth(health);
+        }
 
         private enum LevelState
         {

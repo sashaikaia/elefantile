@@ -111,29 +111,32 @@ namespace Elephantile
             
             // mNoteSubmitter.SubmitNote(chosenNote.pitch, currentSong);
             
-            DoColumnTransition();
         }
 
-        private void SubmitNote(NoteDefinition chosenNote, NoteView view)
+        private void SubmitNote(NoteDefinition chosenNote, NoteView chosenView)
         {
             var expected = GetExpectedNote();
             
+            NoteView exclude = null;
             if (expected.pitch == chosenNote.pitch)
             {
+                exclude = chosenView;
                 mNotePlayer.PlayNote(expected.pitch);
             }
             else
             {
                 mNotePlayer.PlayFailureSound();
             }
-            view.PunchScale(1.05f, 0.2f);
+            chosenView.PunchScale(1.05f, 0.2f);
             AdvanceNote();
+            DoColumnTransition(exclude);
         }
 
-        private void DoColumnTransition()
+        private void DoColumnTransition(NoteView exclude)
         {
             foreach (var noteView in mCandidateViews[mNextColumnIndex])
             {
+                if (exclude == noteView) continue;
                 noteView.Fade();
             }
 

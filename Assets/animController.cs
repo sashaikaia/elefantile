@@ -5,7 +5,10 @@ using UnityEngine;
 public class animController : MonoBehaviour
 {
     public Animator anim;
-    [SerializeField] string stateName;
+    string piano = "piano_anim";
+    string keyW = "keyW_anim";
+    string keyS = "keyS_anim";
+    string keyX = "keyX_anim";
     // Start is called before the first frame update
     void Start()
     {
@@ -21,27 +24,30 @@ public class animController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.W))
         {
-            anim.Play(stateName);
+            anim.Play(piano);
+            anim.Play(keyW);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            anim.Play(stateName);
+            anim.Play(piano);
+            anim.Play(keyS);
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
-            anim.Play(stateName);
+            anim.Play(piano);
+            anim.Play(keyX);
         }
         else if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            anim.Play(stateName);
+            anim.Play(piano);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            anim.Play(stateName);
+            anim.Play(piano);
         }
         else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            anim.Play(stateName);
+            anim.Play(piano);
         }
     }
 }

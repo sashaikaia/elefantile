@@ -12,6 +12,8 @@ public class NotePlayer : MonoBehaviour
     public void Awake() {
         mNoteMapper = new Dictionary<char, FMODUnity.StudioEventEmitter>();
         for (int i = 0; i < mNoteList.Count; ++i) {
+            // hacky bad coding, but it assigns A-G to indices 0-end...
+            // will need to change if using black keys
             mNoteMapper.Add((char)('A'+i), mNoteList[i]);
         }
     }

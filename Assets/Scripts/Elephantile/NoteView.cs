@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -20,6 +21,11 @@ namespace Elephantile
             mSpriteRenderer.DOColor(color, duration);
         }
 
+        public void PunchScale(float factor = 1.05f, float duration = 0.2f)
+        {
+            transform.DOPunchScale(Vector3.one * factor, duration);
+        }
+        
         public void SetNote(NoteDefinition note)
         {
             mSpriteRenderer.sprite = note.sprite;

@@ -12,7 +12,7 @@ namespace Elephantile
     {
         public string levelText = "";
 
-        [SerializeField] private NoteSubmitter mNoteSubmitter;
+        [SerializeField] private NotePlayer mNotePlayer;
         
         [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
         private NoteView mNoteViewPrefab;
@@ -101,13 +101,35 @@ namespace Elephantile
             var maybeKey = mQweInput.ReadKey();
             if (maybeKey is null) return;
 
-            Debug.Log("Submitting note to submitter");
-
             var currentColumn = mCandidateDefinitions[mNextColumnIndex];
+            var currentViewColumn = mCandidateViews[mNextColumnIndex];
+            var chosenNoteView = currentViewColumn[maybeKey.Value];
             var chosenNote = currentColumn[maybeKey.Value];
             var currentSong = 0; // CHANGE ME LATER TO UPDATE AFTER EACH CHAPTER
-            mNoteSubmitter.SubmitNote(chosenNote.pitch, currentSong);
+
+            SubmitNote(chosenNote, chosenNoteView);
             
+            // mNoteSubmitter.SubmitNote(chosenNote.pitch, currentSong);
+            
+            DoColumnTransition();
+        }
+
+        private void SubmitNote(NoteDefinition chosenNote, NoteView view)
+        {
+            var expected = GetExpectedNote();
+            if (expected.pitch == chosenNote.pitch)
+            {
+                mNotePlayer.PlayNote(expected.pitch);
+            }
+            else
+            {
+                mNotePlayer.PlayFailureSound();
+            }
+            view.PunchScale(1.05f, 0.2f);
+        }
+
+        private void DoColumnTransition()
+        {
             foreach (var noteView in mCandidateViews[mNextColumnIndex])
             {
                 noteView.Fade();
@@ -139,10 +161,6 @@ namespace Elephantile
             {
                 mQweInput.SetKey(0);
             }
-        }
-
-        private void UpdateIntro()
-        {
         }
 
 

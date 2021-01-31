@@ -2,13 +2,27 @@
 
 namespace Elephantile
 {
-    public class LevelBase : MonoBehaviour
+    public abstract class LevelBase : MonoBehaviour
     {
         [SerializeField] protected NoteDb mNoteDb;
 
-        public virtual LevelDefinition GetDefinition()
+        public abstract LevelDefinition GetDefinition();
+
+        protected int mIndexOfExpectedNote = 0;
+
+        public virtual NoteDefinition GetExpectedNote()
         {
-            return mNoteDb.ParseLevel("ABCDEFG");
+            return GetDefinition()[mIndexOfExpectedNote];
+        }
+
+        public virtual void AdvanceNote()
+        {
+            ++mIndexOfExpectedNote;
+        }
+
+        public virtual bool IsEndOfLevel()
+        {
+            return mIndexOfExpectedNote >= GetDefinition().Count;
         }
     }
 }

@@ -29,7 +29,7 @@ public class LevelLoader : MonoBehaviour
         mCrossFade.DOColor(color, transitionTime);
     }
 
-    IEnumerator LoadLevel(int levelIndex)
+    IEnumerator CrtLoadLevel(string name)
     {
         if (mPreventLoadNewScene) yield break;
         mPreventLoadNewScene = true;
@@ -45,17 +45,16 @@ public class LevelLoader : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         //loads the scene
-        SceneManager.LoadScene(levelIndex);
+        SceneManager.LoadScene(name);
         mPreventLoadNewScene = false;
     }
 
     public void LoadLevel(string sceneName)
     {
-        var id = SceneManager.GetSceneByName(sceneName).buildIndex;
         if (mSoundTrack != null)
         {
             mSoundTrack.Stop();
         }
-        StartCoroutine(LoadLevel(id));
+        StartCoroutine(CrtLoadLevel(sceneName));
     }
 }

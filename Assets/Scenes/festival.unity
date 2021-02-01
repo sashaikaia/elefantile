@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 323819345286904749, guid: 00a01eddd7b925a4f8999c9b996b6760, type: 3}
       propertyPath: mNextLevel
-      value: Scenes/single_mother
+      value: Scenes/credits
       objectReference: {fileID: 0}
     - target: {fileID: 323819345882883986, guid: 00a01eddd7b925a4f8999c9b996b6760, type: 3}
       propertyPath: m_Name
@@ -185,10 +185,14 @@ PrefabInstance:
     - target: {fileID: 323819346011918989, guid: 00a01eddd7b925a4f8999c9b996b6760, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ef7a9c995d0d65a40b0e55fa1b6b6956, type: 3}
+      objectReference: {fileID: 21300000, guid: 9a742fd331fbf2a48aa170f332786eb8, type: 3}
+    - target: {fileID: 323819346061148932, guid: 00a01eddd7b925a4f8999c9b996b6760, type: 3}
+      propertyPath: Event
+      value: event:/Songs/lost-at-festival/lost-at-festival-normal
+      objectReference: {fileID: 0}
     - target: {fileID: 323819347044244719, guid: 00a01eddd7b925a4f8999c9b996b6760, type: 3}
       propertyPath: levelText
-      value: EDC;EDCB
+      value: ECGBA;FDACAE
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00a01eddd7b925a4f8999c9b996b6760, type: 3}

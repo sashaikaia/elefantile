@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 79726200}
   - component: {fileID: 79726201}
+  - component: {fileID: 79726202}
   m_Layer: 0
   m_Name: TitleLoader
   m_TagString: Untagged
@@ -170,6 +171,20 @@ MonoBehaviour:
   transition: {fileID: 2082629360}
   title: {fileID: 0}
   transitionTime: 1
+  mCrossFade: {fileID: 1659590009}
+  mSoundTrack: {fileID: 0}
+--- !u!114 &79726202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79726199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5ffc41826e4634c92d87df3389135a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &392848050
 GameObject:
   m_ObjectHideFlags: 0

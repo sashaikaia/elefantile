@@ -219,6 +219,7 @@ namespace Elephantile
             }
 
             mAcceptingInput = false;
+            FMODUnity.RuntimeManager.StudioSystem.setParameterByName("streak", 1.0f);
             mSoundTrack.PlayCorrectNote();
             StartCoroutine(DoTransitionToPayoff());
         }
@@ -238,7 +239,7 @@ namespace Elephantile
         {
             var x = mCandidatesParent.localPosition.x;
             mAcceptingInput = false;
-            yield return mCandidatesParent.DOLocalMoveX(x - 1.0f, 0.8f).WaitForCompletion();
+            yield return mCandidatesParent.DOLocalMoveX(x - 1.0f, mIntervalBetweenNotes).WaitForCompletion();
             mAcceptingInput = true;
         }
 

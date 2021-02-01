@@ -13,6 +13,9 @@ namespace Elephantile
         [SerializeField] private StudioEventEmitter mEventEmitter;
         [SerializeField] private string mNextLevel;
         [SerializeField] private Text mPressAnyKeyToContinue;
+        [SerializeField] private LevelLoader mLevelLoader;
+        private bool mAllowTransitionLevel;
+        
         private void Awake()
         {
         }
@@ -21,7 +24,6 @@ namespace Elephantile
         {
             IEnumerator DoPlay()
             {
-                print("LOAD NEXT LEVEL HERE!");
                 yield return new WaitForSeconds(6.0f);
                 DisplayNextLevelHint();
             }
@@ -32,6 +34,15 @@ namespace Elephantile
         private void DisplayNextLevelHint()
         {
             mPressAnyKeyToContinue.gameObject.SetActive(true);
+            mAllowTransitionLevel = true;
+        }
+
+        private void Update()
+        {
+            if (mAllowTransitionLevel && Input.anyKeyDown)
+            {
+                mLevelLoader.LoadLevel(mNextLevel);
+            }
         }
     }
 }

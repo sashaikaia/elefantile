@@ -31,5 +31,11 @@ namespace Elephantile
         {
             mStartedPlaying = false;
         }
+
+        public void Stop()
+        {
+            mEmitter.EventInstance.setPaused(true);
+            ResetTrack();
+        }
     }
 }

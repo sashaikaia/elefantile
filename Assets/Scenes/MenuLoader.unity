@@ -206,11 +206,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1176004544 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 8553236658412570788, guid: 726809b723d04324d93349a0ade8932c, type: 3}
-  m_PrefabInstance: {fileID: 6332092719885948042}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1420992313
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,18 +279,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2125573522095167148, guid: 726809b723d04324d93349a0ade8932c, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2125573522095167148, guid: 726809b723d04324d93349a0ade8932c, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2125573522095167148, guid: 726809b723d04324d93349a0ade8932c, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2715212117452064369, guid: 726809b723d04324d93349a0ade8932c, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -344,9 +327,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelLoader
       objectReference: {fileID: 0}
-    - target: {fileID: 4682592685301641010, guid: 726809b723d04324d93349a0ade8932c, type: 3}
-      propertyPath: transition
-      value: 
-      objectReference: {fileID: 1176004544}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 726809b723d04324d93349a0ade8932c, type: 3}

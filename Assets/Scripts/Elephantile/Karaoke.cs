@@ -23,6 +23,8 @@ public class Karaoke : MonoBehaviour
     {
         LoadCorrectResult(level);
 
+        yield return new WaitForSeconds(0.5f);
+        
         for (int rowId = 0; rowId < mNotes.Count; ++rowId)
         {
             var row = mNotes[rowId];

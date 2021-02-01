@@ -17,7 +17,8 @@ namespace Elephantile
         [SerializeField] private NotePlayer mNotePlayer;
         [SerializeField] private Karaoke mKaraoke;
 
-        [FormerlySerializedAs("mNotViewPrefab")] [SerializeField]
+        [FormerlySerializedAs("mNotViewPrefab")]
+        [SerializeField]
         private NoteView mNoteViewPrefab;
 
         [SerializeField] private Camera mMainCamera;
@@ -101,7 +102,7 @@ namespace Elephantile
                     }
                     columnView.Add(noteView);
                 }
-                
+
                 mCandidateViews.Add(columnView);
                 ++colId;
             }
@@ -127,7 +128,8 @@ namespace Elephantile
                 {
                     ProcessQweInput();
                 }
-            } else
+            }
+            else
             {
                 ReadQweInput();
             }
@@ -143,7 +145,7 @@ namespace Elephantile
             var currentViewColumn = mCandidateViews[GetIndexOfExpectedNote()];
             var chosenNoteView = currentViewColumn[maybeKey.Value];
             var chosenNote = currentColumn[maybeKey.Value];
-            
+
             SubmitNote(chosenNote, chosenNoteView);
 
             // mNoteSubmitter.SubmitNote(chosenNote.pitch, currentSong);
@@ -165,7 +167,7 @@ namespace Elephantile
                 exclude = chosenView;
                 mNotePlayer.PlayNote(expected.pitch);
 
-                print("expected "+base.GetIndexOfExpectedNote());
+                print("expected " + base.GetIndexOfExpectedNote());
                 if (base.GetIndexOfExpectedNote() >= 5)
                 {
                     print("level over");
@@ -173,7 +175,7 @@ namespace Elephantile
                     {
                         yield return new WaitForSeconds(1.0f);
                         mLevelState = LevelState.Payoff;
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                     }
 
                     mAcceptingInput = false;
@@ -195,7 +197,7 @@ namespace Elephantile
             }
 
             AdvanceNote();
-            
+
             StartCoroutine(CrtDoMoveLeft());
         }
 

@@ -167,15 +167,14 @@ namespace Elephantile
                 exclude = chosenView;
                 mNotePlayer.PlayNote(expected.pitch);
 
-                print("expected " + base.GetIndexOfExpectedNote());
                 if (base.GetIndexOfExpectedNote() >= 5)
                 {
                     print("level over");
                     IEnumerator DoTransitionToPayoff()
                     {
-                        yield return new WaitForSeconds(1.0f);
+                        yield return new WaitForSeconds(.75f);
                         mLevelState = LevelState.Payoff;
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                        SceneManager.LoadScene("Title");
                     }
 
                     mAcceptingInput = false;

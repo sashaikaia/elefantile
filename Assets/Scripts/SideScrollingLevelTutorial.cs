@@ -151,7 +151,8 @@ namespace Elephantile
 
         private void SubmitNote(NoteDefinition chosenNote, NoteView chosenView)
         {
-            if (IsEndOfLevel()) return;
+            print("submit note");
+            if (base.IsEndOfLevel()) return;
 
             var expected = GetExpectedNote();
 
@@ -163,15 +164,16 @@ namespace Elephantile
                 chosenView.PunchScale(1.05f, 0.2f);
                 exclude = chosenView;
                 mNotePlayer.PlayNote(expected.pitch);
-          
 
-                if (IsEndOfLevel())
+                print("expected "+base.GetIndexOfExpectedNote());
+                if (base.GetIndexOfExpectedNote() >= 5)
                 {
+                    print("level over");
                     IEnumerator DoTransitionToPayoff()
                     {
                         yield return new WaitForSeconds(1.0f);
                         mLevelState = LevelState.Payoff;
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
                     }
 
                     mAcceptingInput = false;
